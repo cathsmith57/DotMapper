@@ -378,6 +378,10 @@ shinyServer(function(input, output, session) {
         colnames(venueDat$venueDatNam)[which(colnames(venueDat$venueDatNam)==input$venuename)]<-"name"  
         colnames(venueDat$venueDatNam)[which(colnames(venueDat$venueDatNam)==input$venuelat)]<-"lat" 
         colnames(venueDat$venueDatNam)[which(colnames(venueDat$venueDatNam)==input$venuelon)]<-"lon" 
+        
+        ## add string to venue id to make sure different to case
+        venueDat$venueDatNam$id<-paste0("venueid", venueDat$venueDatNam$id)
+        
       }
       
       # Update inputs
