@@ -22,7 +22,7 @@ DotMapper uses two data files, cases and venues. They must be saved as .csv file
 
 Details of cases of disease, using one row per individual. Must include:
 
-- Unique patient identifier. 
+- Unique patient identifier.
 - Date of case report or notification, formatted as dd/mm/yyyy (e.g. 25/05/2005).
 - Latitude and lohgitude of case location.
 
@@ -42,6 +42,24 @@ Locations of contextual venues, such as clinics, food outlets, etc. If used, mus
 ### Example data
 
 [Example data sets](https://github.com/cathsmith57/DotMapper/tree/master/Example%20data), based on dummy data, can be used to run the application. 
+
+The variables in the example data that need to be specified in data import are:
+
+#### Cases
+
+- id: unique patient identifier
+- date: date of case report/ notification
+- lon: longitude
+- lat: latitude
+- sex, agegroup, ethnicity, ukborn, druguse, prison, alcuse, clusterid: categorical variables
+
+#### Venues
+
+- id: unique venue identifier
+- type: type of venue
+- name: name of venue
+- lon: longitude
+- lat: latitude
 
 ## Running the app
 
