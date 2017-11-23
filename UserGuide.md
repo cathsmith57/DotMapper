@@ -1,78 +1,77 @@
 # DotMapper User Guide
 
-## Install packages
-Make sure that the following packages are installed using install.packages("package_name")
-
-Running app and generating interactive maps and plots:
-- shiny
-- leaflet
-- RcolorBrewer
-- ggplot2
-
-Aggregating data and producing summary tables:
-- plyr
-
-Formatting dates:
-- lubridate
-- zoo
-- epitools
-
-Reshaping data:
-- tidyr
-- reshape2
-
-Geocoding points:
-- ggmap 
+## Installing the app
 
 
-## Data requirements
-DotMapper uses two data files, examples of which are provided in the [Example data folder](https://github.com/cathsmith57/DotMapper/tree/master/Example%20data):
+To use DotMapper, you need to have [R](https://www.r-project.org/) installed on your machine. 
 
-### cases 
-Details of cases in clusters, using one row per individual. Columns are variables of four types:
+You then need to install the Shiny package: ```install.pacakges("shiny")```, and load it: ```library(shiny)```.
 
-- Plotting variables 
-	- These are the characteristics of the cases that will be used to colour code plotted points, for example age, sex, ethnicity, risk factors. 
-	- Must be formatted as **factors**.
-	- Must be the first columns in the data set.
-	-- Variables can have any names but must have no spaces (e.g. "AgeGroup" instead of "Age Group")
-- IDs 
-	- *id* is the unique identifier for each case. 
-	- *clusterid* is the name of the cluster. DotMapper can be used to display one or multiple clusters.
-- Dates 
-	- *date* is the date of case report or notification. 
-	- Must be formatted day/month/year, for example "20/03/2015".
-- Geographic information 
-	- *lon* and *lat* are the longitude and latitude of case locations. 
-	- Alternatively, *loc* is a character string specifying a location, such as postcode (uses geocode function from ggmap package to generate lon and lat columns).
-
-### venues (optional)
-Locations of contextual venues, such as clinics, food outlets, etc. Columns are variables of two types:
-
-- IDs
-	- *id* is the unique identifier of each location. These must be different to the IDs used for cases.
-	- *name* is the name of the location.
-	- *type* is the type of location.
-- Geographic information 
-	- *lon* and *lat* are the longitude and latitude of venue locations. 
-	- Alternatively, *loc* is a character string specifying a location, such as postcode (uses geocode function from ggmap package to generate lon and lat columns).
+Then, run the app using the R command: 
 
 
-**NB: ID, date and geographic information columns must be named as stated in *italics* above.**
+```runGitHub("DotMapper", "cathsmith57", launch.browser=T)```
+
+The application is also hosted on the shinyapps.io server: [https://cathsmith57.shinyapps.io/DotMapper/](https://cathsmith57.shinyapps.io/DotMapper/). Please note that this is intended for demonstration purposes only and should not be used for upload of sensitive data. 
+
+## Data sets
+
+DotMapper uses two data files, cases and venues. They must be saved as .csv files with variable names in column headers and one row per individual case or venue.
+
+### Cases 
+
+Details of cases of disease, using one row per individual. Must include:
+
+- Unique patient identifier. 
+- Date of case report or notification, formatted as dd/mm/yyy (e.g. 25/05/2005).
+- Latitude and lohgitude of case location.
+
+Optionally, it can also include characteristics of cases (e.g. age, sex, risk factors). These must be categorical variables. 
 
 **Missing data should be coded as NA.**
 
-## Running App
+### Venues (optional)
 
+Locations of contextual venues, such as clinics, food outlets, etc. If used, must contain:
 
-1. Create a new folder to act as your working directory.
-2. Download the [FormatData.R](https://github.com/cathsmith57/DotMapper/blob/master/FormatData.R) script, and the [App](https://github.com/cathsmith57/DotMapper/tree/master/App) folder and save in your working directory.
-3. Open FormatData.R in R and locate the *Specify data parameters* section. There is one value that has to be set by the user:
-	- plVar - number of *Plotting variables* in the case data. For example, if you wish to be able to plot Age, Sex and Ethnicity, these are the first three columns in the cases data set, and plVar should be set to 3. In the example data set there are seven plotting variables, so plVar = 7.
-4. Run FormatData.R script. This will format the data and then run the shiny app.
+- Unique venue identifier.
+- Name of venue.
+- Type of venue.
+- Latitude and longitude of venue.
+
+### Example data
+
+[Example data sets](https://github.com/cathsmith57/DotMapper/tree/master/Example%20data), based on dummy daat, can be used to run the application. 
+
+## Running the app
+
+### 1. Load data
+
+Click 'Browse' and navigate to the file stored on your computer.
+
+### 2. Preview data
+
+When you have loaded a file, it will appear in the 'Preview data' section. 
+
+### 3. Identify variables
+
+Use the drop-down lists to identify the columns in your data set that include the key variables to run the app. When they are selected, click 'Go' to view the interactive visualisations.
+
+## Using the app
+
+The app has four tabs: Data input; Map; Table and Bar chart. 
+
+Controls have options for:
+
+- Filtering data according to time period and any categorical variables included. 
+- Changing the time period that data are grouped into (day, month, quarter, year).
+- Displaying contextual venues on the map. 
+- Changing the size of the bar chart. 
+
 
 ## Notes
 
-- If coordinates are not valid or location names fail to geocode, data for these cases will be included in summary tables and epidemic curves, but cases will not be plotted.
-
+- If coordinates are not valid, data for these cases will be included in summary tables and epidemic curves, but cases will not be plotted.
+- This app uses the R packages: Leaflet, dplyr, tidyr, lubridate, zoo, epitools, shinyjs, shinydashboard, RColorBrewer, ggplot2.
+- More information can be found in in [Smith CM and Hayward AC (2016). DotMapper: an open source tool for creating interactive disease point maps. BMC Infectious Diseases 16:145. doi:10.1186/s12879-016-1475-5](https://bmcinfectdis.biomedcentral.com/articles/10.1186/s12879-016-1475-5)
 
