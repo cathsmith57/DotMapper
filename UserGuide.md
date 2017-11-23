@@ -39,28 +39,6 @@ Locations of contextual venues, such as clinics, food outlets, etc. If used, mus
 - Type of venue.
 - Latitude and longitude of venue.
 
-### Example data
-
-[Example data sets](https://github.com/cathsmith57/DotMapper/tree/master/Example%20data), based on dummy data, can be used to run the application. 
-
-The variables in the example data that need to be specified in data import are:
-
-#### Cases
-
-- id: unique patient identifier
-- date: date of case report/ notification
-- lon: longitude
-- lat: latitude
-- sex, agegroup, ethnicity, ukborn, druguse, prison, alcuse, clusterid: categorical variables
-
-#### Venues
-
-- id: unique venue identifier
-- type: type of venue
-- name: name of venue
-- lon: longitude
-- lat: latitude
-
 ## Running the app
 
 ### 1. Load data
@@ -86,6 +64,27 @@ Controls have options for:
 - Displaying contextual venues on the map. 
 - Changing the size of the bar chart. 
 
+## Example data
+
+[Example data sets](https://github.com/cathsmith57/DotMapper/tree/master/Example%20data), based on dummy data, can be used to run the application. 
+
+The variables in the example data that need to be specified in data import are:
+
+### Cases
+
+- id: unique patient identifier
+- date: date of case report/ notification
+- lon: longitude
+- lat: latitude
+- sex, agegroup, ethnicity, ukborn, druguse, prison, alcuse, clusterid: categorical variables
+
+### Venues
+
+- id: unique venue identifier
+- type: type of venue
+- name: name of venue
+- lon: longitude
+- lat: latitude
 
 ## Notes
 
