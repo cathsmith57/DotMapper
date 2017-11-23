@@ -576,19 +576,23 @@ shinyServer(function(input, output, session) {
   sumDat<-reactive({
     sumDat1<-caseFil()
     if(length(input$catvars>=1)){
+      suppressWarnings(
       sumDat1<-
         sumDat1 %>%
         select(input$durChoice, input$catvars) %>%
         gather(key=Variable, value=Group, na.rm=F) %>%
         group_by(Variable, Group) %>%
-        summarise(Selected_cases_n=n(), Selected_cases_percent=Selected_cases_n/nrow(sumDat1)*100)
+        summarise(Selected_cases_n=n(), Selected_cases_percent=round(Selected_cases_n/nrow(sumDat1)*100,2))
+      )
     } else {
+      suppressWarnings(
       sumDat1<-
         sumDat1 %>%
         select(input$durChoice) %>%
         gather(key=Variable, value=Group, na.rm=F) %>%
         group_by(Variable, Group) %>%
-        summarise(Number_of_cases=n(), Cases_percent=Number_of_cases/nrow(sumDat1)*100)
+        summarise(Number_of_cases=n(), Cases_percent=round(Number_of_cases/nrow(sumDat1)*100,2))
+      )
     }
     
     sumDat1
