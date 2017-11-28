@@ -264,16 +264,16 @@ shinyServer(function(input, output, session) {
   outputOptions(output, 'venuelonUi', suspendWhenHidden=FALSE)
 
   # Validate inputs - generate error messages
-  ## Core
+  ## Cases
   output$warn<-renderText({
     if(is.null(input$fileCase)){
       "Please select data"
     } else if(!is.null(input$fileCase)){
       validate(
-        ### Core variables not selected
+        ### Case variables not selected
         need(input$caseid!="" & input$casedate!="" & input$caselat!="" &  input$caselon!="",
              "Please select variables"),
-        ### Core same variable selected for >1 field
+        ### Case same variable selected for >1 field
         if(input$caseid!="" & input$casedate!=""  & input$caselat!="" & input$caselon!=""){
           need(
             anyDuplicated(c(
@@ -334,6 +334,39 @@ shinyServer(function(input, output, session) {
       )
     }
   })
+  
+  # Check that lat and lon are valid - if not warning that rows will be removed
+  
+  ## Cases
+  output$caselatlon<-renderText({
+    if(!is.null(input$caselat) & !is.null(input$caselon)){
+      if(input$caselat!="" & input$caselon!=""){
+        validate(
+          need(all(caseDat$data()[,input$caselon]>=-180, na.rm=T) & all(caseDat$data()[,input$caselon]<=180, na.rm=T) &
+                 all(caseDat$data()[,input$caselat]>=-90, na.rm=T) & all(caseDat$data()[,input$caselat]<=90, na.rm=T) &
+                 any(is.na(caseDat$data()[,input$caselon]))==FALSE & any(is.na(caseDat$data()[,input$caselat]))==FALSE,
+               "One or more rows have invalid latitude or longitude and will not be plotted on map"
+          )
+        )
+      } else {NULL}
+    } else {NULL}
+  })
+  
+  ## Venues
+  output$venuelatlon<-renderText({
+    if(!is.null(input$venuelat) & !is.null(input$venuelon)){
+      if(input$venuelat!="" & input$venuelon!=""){
+        validate(
+          need(all(venueDat$data()[,input$venuelon]>=-180, na.rm=T) & all(venueDat$data()[,input$venuelon]<=180, na.rm=T) &
+                 all(venueDat$data()[,input$venuelat]>=-90, na.rm=T) & all(venueDat$data()[,input$venuelat]<=90, na.rm=T) &
+                 any(is.na(venueDat$data()[,input$venuelon]))==FALSE & any(is.na(venueDat$data()[,input$venuelat]))==FALSE,
+               "One or more rows have invalid latitude or longitude and will not be plotted on map"
+          )
+        )
+      } else {NULL}
+    } else {NULL}
+  })
+  
 
   #----------------------------------------
   # Go button
@@ -474,6 +507,13 @@ shinyServer(function(input, output, session) {
                                caseFil1$date<=input$dateRange[2]),]
     as.data.frame(caseFil1)
   })
+  
+  ## Remove if no lat/ lon
+  caseMap<-reactive({
+    caseMap1<-caseFil()
+    caseMap1 %>%
+      filter(lat>=-90 & lat<=90 & lon>=-180 & lon<=180)
+  })
  
   #----------------------------------------
   # Map
@@ -484,7 +524,8 @@ shinyServer(function(input, output, session) {
   output$datamap<-renderLeaflet({
     leaflet() %>% 
       addTiles() %>%
-      setView(lat=median(caseDat$caseDatNam$lat),lng=median(caseDat$caseDatNam$lon), zoom=9, options=list(maxZoom=11))
+      setView(lat=median(caseMap()$lat),lng=median(caseMap()$lon), zoom=9, options=list(maxZoom=11))
+#      setView(lat=median(caseDat$caseDatNam$lat),lng=median(caseDat$caseDatNam$lon), zoom=9, options=list(maxZoom=11))
   })
   
   # Add features to map

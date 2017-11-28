@@ -12,7 +12,9 @@ Then, run the app using the R command:
 
 ```runGitHub("DotMapper", "cathsmith57", launch.browser=T)```
 
-The application is also hosted on the shinyapps.io server: [https://cathsmith57.shinyapps.io/DotMapper/](https://cathsmith57.shinyapps.io/DotMapper/). Please note that this is intended for demonstration purposes only and should not be used for upload of sensitive data. 
+When the app is run through R, all data remain stored on the local machine. There is no upload of data to the internet. 
+
+A demonstration version of the application is also hosted on the shinyapps.io server: [https://cathsmith57.shinyapps.io/DotMapper/](https://cathsmith57.shinyapps.io/DotMapper/). Please note that this online version should not be used for sensitive data as we cannot guarantee the security of data uploaded to this server. For interrogation of sensitive data, users should run the application through R on their local machine. 
 
 ## Data sets
 

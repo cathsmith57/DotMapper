@@ -100,7 +100,8 @@ body <- dashboardBody(
                                                uiOutput("casedateUi"),
                                                uiOutput("catvarUi"),
                                                uiOutput("caselatUi"),
-                                               uiOutput("caselonUi")
+                                               uiOutput("caselonUi"),
+                                               textOutput("caselatlon")
                                            )
                                          )
                                 ),
@@ -111,7 +112,8 @@ body <- dashboardBody(
                                                uiOutput("venuetypeUi"),
                                                uiOutput("venuenameUi"),
                                                uiOutput("venuelatUi"), 
-                                               uiOutput("venuelonUi")
+                                               uiOutput("venuelonUi"),
+                                               textOutput("venuelatlon")
                                            )
                                          )
                                 )
