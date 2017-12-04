@@ -524,8 +524,8 @@ shinyServer(function(input, output, session) {
   output$datamap<-renderLeaflet({
     leaflet() %>% 
       addTiles() %>%
-      setView(lat=median(caseMap()$lat),lng=median(caseMap()$lon), zoom=9, options=list(maxZoom=11))
-#      setView(lat=median(caseDat$caseDatNam$lat),lng=median(caseDat$caseDatNam$lon), zoom=9, options=list(maxZoom=11))
+#      setView(lat=median(caseMap()$lat),lng=median(caseMap()$lon), zoom=9, options=list(maxZoom=11))
+      setView(lat=median(caseDat$caseDatNam$lat),lng=median(caseDat$caseDatNam$lon), zoom=9, options=list(maxZoom=11))
   })
   
   # Add features to map
